@@ -1,0 +1,17 @@
+{
+  "name": "scalejs.styles-less",
+  "version": "1.0.0",
+  "main": [
+    "scalejs.styles.js"
+  ],
+  "ignore": [
+    "README.md", "LICENSE"
+  ],
+  "dependencies": {
+    "requirejs": "latest",
+    "almond": "latest",
+    "scalejs": "lisovin/scalejs",
+    "less": "latest"
+  }
+}
+
