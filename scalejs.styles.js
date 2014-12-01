@@ -1,4 +1,4 @@
-define('less', ['require'], function(require) {
+define('lessc', ['require'], function(require) {
 
     var lessAPI = {};
 
@@ -47,7 +47,7 @@ define('less', ['require'], function(require) {
     }
 
     lessAPI.load = function(lessId, req, load, config) {
-        require(['./lessc', './normalize'], function(lessc, normalize) {
+        require(['./less', './normalize'], function(lessc, normalize) {
 
             var fileUrl = req.toUrl(lessId + '.less');
             fileUrl = normalize.absoluteURI(fileUrl, pagePath);
@@ -83,7 +83,7 @@ define(function () {
                     n = './styles/' + n;
                 }
 
-                return 'less!' + n;
+                return 'lessc!' + n;
             });
 
             req(names, function () {
@@ -92,4 +92,3 @@ define(function () {
         }
     };
 });
-
