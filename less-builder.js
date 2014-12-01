@@ -1,12 +1,12 @@
-define(['require', './normalize'], function(req, normalize) {
+define(['require', 'normalize'], function(req, normalize) {
   var lessAPI = {};
 
   var isWindows = !!process.platform.match(/^win/);
-  
+
   var baseParts = req.toUrl('base_url').split('/');
   baseParts[baseParts.length - 1] = '';
   var baseUrl = baseParts.join('/');
-  
+
   function compress(css) {
     if (typeof process !== "undefined" && process.versions && !!process.versions.node && require.nodeRequire) {
       try {
@@ -32,7 +32,7 @@ define(['require', './normalize'], function(req, normalize) {
     else {
       var content = new java.lang.String(data);
       var output = new java.io.BufferedWriter(new java.io.OutputStreamWriter(new java.io.FileOutputStream(path), 'utf-8'));
-  
+
       try {
         output.write(content, 0, content.length());
         output.flush();
@@ -68,7 +68,7 @@ define(['require', './normalize'], function(req, normalize) {
   }
 
   var absUrlRegEx = /^([^\:\/]+:\/)?\//;
-  
+
   lessAPI.load = function(name, req, load, _config) {
     //store config
     config = config || _config;
@@ -106,26 +106,26 @@ define(['require', './normalize'], function(req, normalize) {
   }
 
   var layerBuffer = [];
-  
+
   lessAPI.write = function(pluginName, moduleName, write) {
     if (moduleName.match(absUrlRegEx))
       return load();
-    
+
     layerBuffer.push(lessBuffer[moduleName]);
-    
+
     write.asModule(pluginName + '!' + moduleName, 'define(function(){})');
   }
-  
+
   lessAPI.onLayerEnd = function(write, data) {
-    
+
     //calculate layer css
     var css = layerBuffer.join('');
-    
+
     if (config.separateCSS) {
       console.log('Writing CSS! file: ' + data.name + '\n');
-      
+
       var outPath = config.appDir ? config.baseUrl + data.name + '.css' : config.out.replace(/\.js$/, '.css');
-      
+
       saveFile(outPath, compress(css));
     }
     else {
@@ -136,10 +136,10 @@ define(['require', './normalize'], function(req, normalize) {
         + "('" + escape(compress(css)) + "');\n"
       );
     }
-    
+
     //clear layer buffer for next layer
     layerBuffer = [];
   }
-  
+
   return lessAPI;
 });
