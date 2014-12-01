@@ -137,6 +137,7 @@ normalizeCSS.relativeURI = relativeURI;
 
 return normalizeCSS;
 });
+
 define('lessc', ['require'], function(require) {
 
     var lessAPI = {};
@@ -186,7 +187,7 @@ define('lessc', ['require'], function(require) {
     }
 
     lessAPI.load = function(lessId, req, load, config) {
-        require(['lessc', 'normalize'], function(lessc, normalize) {
+        require(['less', 'normalize'], function(lessc, normalize) {
 
             var fileUrl = req.toUrl(lessId + '.less');
             fileUrl = normalize.absoluteURI(fileUrl, pagePath);
